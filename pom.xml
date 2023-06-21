@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dachuang</groupId>
-    <artifactId>git_dachang</artifactId>
+    <artifactId>git_dachaung</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>git_dachang</name>
     <description>git_dachang</description>
