@@ -20,18 +20,14 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getEmail());
         User user1 = userMapper.selectUserByEmail(user.getEmail());
         System.out.println(user1);
-        System.out.println("2");
         if(user1==null)
         {
-            System.out.println(3);
             return new Result(Code.GET_Err,user,"用户不存在！");
         }
         if(!user1.getPassword().equals(user.getPassword()))
         {
-            System.out.println(4);
             return new Result(Code.GET_Err,user,"用户密码错误！");
         }
-        System.out.println(5);
         return new Result(Code.GET_Err,user,"登录成功,你好"+","+user1.getUserName());
     }
     @Override
