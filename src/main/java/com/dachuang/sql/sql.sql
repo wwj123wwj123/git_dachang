@@ -3,9 +3,9 @@ create table sys_user
 (
     id          bigint auto_increment comment '主键'
         primary key,
-    user_name   varchar(256) default 'NULL' not null comment '用户名',
-    nick_name   varchar(256) default 'NULL' not null comment '昵称',
-    password    varchar(256) default 'NULL' not null comment '密码',
+    user_name   varchar(255) default 'NULL' not null comment '用户名',
+    nick_name   varchar(255) default 'NULL' not null comment '昵称',
+    password    varchar(255) default 'NULL' not null comment '密码',
     status      char(255)    default '0'    null comment '账号状态（0正常 1停用）',
     email       varchar(255)                null comment '邮箱',
     phonenumber varchar(255)                null comment '手机号',
