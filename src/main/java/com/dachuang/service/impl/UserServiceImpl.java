@@ -15,11 +15,15 @@ public class UserServiceImpl implements UserService {
      @Autowired
      private UserMapper userMapper;
 
+    /**
+     *
+     * @param user
+     * @return Result
+     * 登录实现
+     */
     @Override
     public Result login(User user) {
-        System.out.println(user.getEmail());
         User user1 = userMapper.selectUserByEmail(user.getEmail());
-        System.out.println(user1);
         if(user1==null)
         {
             return new Result(Code.GET_Err,user,"用户不存在！");
@@ -30,6 +34,23 @@ public class UserServiceImpl implements UserService {
         }
         return new Result(Code.GET_Err,user,"登录成功,你好"+","+user1.getUserName());
     }
+
+    /**
+     * 注册实现
+     * @param user
+     * @return
+     */
+    @Override
+    public Result register(User user) {
+        User user1 = userMapper.selectUserByEmail(user.getEmail());
+        if(user1!=null)
+        {
+            return new Result(Code.UPDATE_Err,user,"用户已存在！");
+        }
+
+        return userMapper.registerUser(user)>0?new Result(Code.UPDATE_OK,user,"注册成功！"):new Result(Code.UPDATE_Err,user,"注册失败！");
+    }
+
     @Override
     public boolean selectUserByEmail(String email) {
         return userMapper.selectUserByEmail(email)!=null;
