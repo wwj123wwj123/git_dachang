@@ -1,8 +1,8 @@
-package com.dachuang.controller;
+package com.dachuang.controller.user;
 
-import com.dachuang.controller.common.Result;
-import com.dachuang.domin.User;
-import com.dachuang.service.UserService;
+import com.dachuang.entity.user.dto.UserDTO;
+import com.dachuang.service.user.UserService;
+import com.dachuang.util.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,24 +15,24 @@ public class UserController {
 
     /**
      * 登录接口
-     * @param user
+     * @param userDTO
      * @return
-     * @param <user>
+     * @param <userDto>
      */
     @PostMapping("/user/login")
-    public <user> Result login(@RequestBody User user)
+    public <userDto> HttpResult login(@RequestBody UserDTO userDTO)
     {
-        return userService.login(user);
+        return userService.login(userDTO);
     }
 
     /**
      * 注册接口
-     * @param user
+     * @param userDTO
      * @return
      */
     @PostMapping("/user/register")
-    public Result register(@RequestBody User user)
+    public HttpResult register(@RequestBody UserDTO userDTO)
     {
-        return userService.register(user);
+        return userService.register(userDTO);
     }
 }
