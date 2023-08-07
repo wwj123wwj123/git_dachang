@@ -35,6 +35,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileDO> implements 
     @Autowired
     private FileMapper fileMapper;
 
+    /**
+     * 文件上传
+     * @param fileUploadDTO
+     * @return
+     */
+
     @Override
     public HttpResult uploadFile(FileUploadDTO fileUploadDTO) {
         File folder = new File(fileLocation);
@@ -51,8 +57,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileDO> implements 
             return HttpResult.error(e.getMessage());
         }
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         fileDO = FileDO.builder()
+                .address(fileUploadDTO.getAddress())
                 .sampleName(flag + "_" + filename)
                 .path(rootFilePath)
                 .size((int) (fileUploadDTO.getFile().getSize() / 1024))

@@ -1,13 +1,20 @@
 package com.dachuang.service.user.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dachuang.entity.file.po.FileDO;
+import com.dachuang.entity.user.dto.DataMangementDTO;
 import com.dachuang.entity.user.dto.UserDTO;
 import com.dachuang.entity.user.po.UserDO;
 import com.dachuang.enums.ResultCodeEnum;
 import com.dachuang.mapper.user.UserMapper;
 import com.dachuang.service.user.UserService;
 import com.dachuang.util.HttpResult;
+import com.dachuang.util.copy.BeanCopyUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,UserDO> implements UserService {
@@ -60,5 +67,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDO> implements U
     @Override
     public boolean selectUserByEmail(String email) {
         return userMapper.selectUserByEmail(email)!=null;
+    }
+
+    @Override
+    public HttpResult dataMangement(Long userId) {
+
+        List<FileDO> fileDOS = userMapper.selectDataMangement(userId);
+        List<DataMangementDTO> dataMangementDTOS  = BeanCopyUtil.copyListProperties(fileDOS,DataMangementDTO::new);
+        return HttpResult.success(dataMangementDTOS);
     }
 }

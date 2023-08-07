@@ -21,4 +21,8 @@ public class FileUploadDTO {
      * useid
      */
     private Long userId;
+    /**
+     * 文件的地理信息
+     */
+    private String address;
 }

@@ -11,11 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.util.List;
-
 @RestController
+@RequestMapping("/file")
 public class FileController {
     @Value("${file.location}")
     private String fileLocation;

@@ -80,7 +80,9 @@ public class FileDO {
      */
     @TableField(value = "size")
     private Integer size;
-
-
-
+    /**
+     * 图片的地址
+     */
+    @TableField(value = "address")
+    private String address;
 }
