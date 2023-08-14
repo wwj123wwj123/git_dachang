@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -56,15 +57,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileDO> implements 
         } catch (IOException e) {
             return HttpResult.error(e.getMessage());
         }
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         fileDO = FileDO.builder()
                 .address(fileUploadDTO.getAddress())
                 .sampleName(flag + "_" + filename)
                 .path(rootFilePath)
                 .size((int) (fileUploadDTO.getFile().getSize() / 1024))
                 .createBy(fileUploadDTO.getUserId())
-                .createTime(formatter.format(calendar.getTime()))
+                .createTime(LocalDateTime.now())
                 .build();
         int insert = fileMapper.insert(fileDO);
         if (insert != StyleOfStudyConstant.REVIEW_SUCCESS) {

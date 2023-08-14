@@ -22,6 +22,5 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @param userId
      * @return
      */
-    @Select("select * from sys_sample where create_by = #{userId}")
     List<FileDO> selectDataMangement(Long userId);
 }

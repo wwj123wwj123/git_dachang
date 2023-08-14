@@ -4,10 +4,7 @@ import com.dachuang.entity.user.dto.UserDTO;
 import com.dachuang.service.user.UserService;
 import com.dachuang.util.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -37,8 +34,9 @@ public class UserController {
     {
         return userService.register(userDTO);
     }
-    @PostMapping("/mange")
+    @GetMapping("/mange")
     public HttpResult dataManagement(Long userId){
         return userService.dataMangement(userId);
     }
+
 }

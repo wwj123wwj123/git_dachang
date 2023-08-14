@@ -1,16 +1,22 @@
-package com.dachuang.entity.user.dto;
+package com.dachuang.entity.user.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DataMangementDTO {
+public class DataMangementVO {
+    /**
+     * 数据库中的id
+     */
+    private Long id;
     /**
      * 文件保存路径
      */
@@ -18,7 +24,7 @@ public class DataMangementDTO {
     /**
      *  样例状态（0 审核中  1 通过）
      */
-    private String status;
+    private Integer status;
     /**
      *  创建文件的人 存用户的userId
      */
@@ -26,7 +32,8 @@ public class DataMangementDTO {
     /**
      * 文件创建的时间
      */
-    private String createTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
     /**
      * 文件的备注
      */

@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 /**
  * @author chong'chong'chong
  */
@@ -44,7 +46,7 @@ public class FileDO {
      *  样例状态（0 审核中  1 通过）
      */
     @TableField(value = "status")
-    private String status;
+    private Integer status;
     /**
      *  创建文件的人 存用户的userId
      */
@@ -54,7 +56,7 @@ public class FileDO {
      * 文件创建的时间
      */
     @TableField(value = "create_time")
-    private String createTime;
+    private LocalDateTime createTime;
     /**
      * 文件更新的人
      */
@@ -64,7 +66,7 @@ public class FileDO {
      * 文件更新的时间
      */
     @TableField(value = "update_time")
-    private String updateTime;
+    private LocalDateTime updateTime;
     /**
      * 文件是否被删除（0 未删除 1 已删除）
      */

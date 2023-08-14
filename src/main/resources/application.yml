@@ -11,13 +11,13 @@ spring:
       # 用来指定客户端文件大小的限制
       max-request-size: 300MB
 #      fileLocation: static/files
+#  webservices:
+#     allowed-origins: 'http://127.0.0.1:5500/'
 file:
   location: D:/大创/网站/ #自定义上传文件本地保存路径
 server:
   port: 8080
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-
-
 
 
