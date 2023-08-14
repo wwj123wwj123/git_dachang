@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大尺度遥感影像</title>
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .main {
+            margin-left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="layout">
+        <el-container>
+            <el-header>
+                <div class="box">
+                    <div class="headline">数据管理</div>
+                    <div class="login"><a href="#">返回</a></div>
+                </div>
+            </el-header>
+            <el-container>
+                <el-aside width="95px"> <template>
+                        <el-tabs :tab-position="tabPosition" style="height: 200px;">
+                            <el-tab-pane label="数据审核"></el-tab-pane>
+                            <el-tab-pane label="导入地图"></el-tab-pane>
+                            <el-tab-pane label="在线解译"></el-tab-pane>
+                            <el-tab-pane label="用户反馈"></el-tab-pane>
+                        </el-tabs>
+                    </template>
+                </el-aside>
+                <el-main>
+                    <template>
+                        <el-upload class="upload-demo inline-block" action="http://localhost:8080/file/upload"
+                            :auto-upload="true" method="post">
+                            <el-button size="small" type="primary">点击上传</el-button>
+                    </template>
+                    </el-upload>
+                    <el-button size="small" type="danger" @click="deleteByIds">批量删除</el-button>
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column type="selection" width="55"></el-table-column>
+                            <el-table-column prop="createTime" label="日期" width="100"
+                                :sortable="true"></el-table-column>
+                            <el-table-column prop="size" label="数据大小" width="130" :sortable="true"></el-table-column>
+                            <el-table-column label="图片" width="180">
+                                <template slot-scope="scope">
+                                    <el-popover placement="top-start" title="" trigger="hover">
+                                        <img :src="scope.row.path" alt="" style="width: 80px; height: 80px">
+                                        <img slot="reference" :src="scope.row.path" style="width: 50px; height: 50px"
+                                            title="放大图片" @click="openImage(scope.row.path)">
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="address" label="地址" width="230"></el-table-column>
+                            <el-table-column prop="status" label="状态" :formatter="formatSex" width="180"
+                                :sortable="true">
+                            </el-table-column>
+                            <el-table-column prop="reamrk" label="备注">
+                            </el-table-column>
+                            <el-table-column prop="manage" label="管理" width="150">
+                                <template slot-scope="scope">
+                                    <el-row>
+                                        <el-button size="mini" type="primary"
+                                            @click="statusChangePass(scope.row)">通过</el-button>
+                                        <el-button size="mini" type="warning"
+                                            @click="statusChangeBack(scope.row)">退回</el-button>
+                                    </el-row>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </el-main>
+                <template>
+                    <div>
+                        <el-dialog :visible.sync="dialogVisible" title="图片">
+                            <div class="centered">
+                                <img :src="imageUrl" alt="图片" style="width: 600px; height: 500px;">
+                            </div>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
+                            </div>
+                        </el-dialog>
+                    </div>
+                </template>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../plugins/elementui/index.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#layout',
+        data: {
+            dialogVisible: false,
+            imageUrl: '',
+            tabPosition: 'left',
+            tableData: [{
+                id: '',
+                createTime: '2016-05-02',
+                size: '5M',
+                path: 'images/汤峪镇.jpg',
+                address: '陕西省西安市蓝田县汤峪镇',
+                status: '审核中',
+                remark: '',
+            }, {
+                id: '',
+                createTime: '2016-05-02',
+                size: '5M',
+                path: 'images/汤峪镇.jpg',
+                address: '陕西省西安市蓝田县汤峪镇',
+                status: '审核中',
+                remark: '',
+            }, {
+                id: '',
+                createTime: '2016-05-02',
+                size: '5M',
+                path: 'images/汤峪镇.jpg',
+                address: '陕西省西安市蓝田县汤峪镇',
+                status: '审核中',
+                remark: '',
+            }, {
+                id: '',
+                createTime: '2016-05-02',
+                size: '5M',
+                path: 'images/汤峪镇.jpg',
+                address: '陕西省西安市蓝田县汤峪镇',
+                status: '审核中',
+                remark: '',
+            }, {
+                id: '',
+                createTime: '2016-05-02',
+                size: '5M',
+                path: 'images/汤峪镇.jpg',
+                address: '陕西省西安市蓝田县汤峪镇',
+                status: '审核中',
+                remark: '',
+            }]
+        },
+        mounted() {
+            this.refresh()
+        },
+        methods: {
+            refresh() {
+                axios.get('http://localhost:8080/user/mange', {
+
+                }) // 替换为你的API地址  
+                    .then(response => {
+                        this.tableData = response.data.data; // 将获取的数据存储在组件的data属性中  
+                    })
+                    .catch(error => {
+                        console.error(error); // 如果请求失败，打印错误信息  
+                    });
+            },
+            formatSex(row) {
+                return row.status == 0 ? '审核中' : row.status == 1 ? '通过' : '不通过';
+            },
+            handleSuccess(response, file, fileList) {
+                this.$message.success('上传成功');
+            },
+            beforeUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                if (!isJPG) {
+                    this.$message.error('上传图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            deleteByIds() {
+
+            },
+            openImage(path) {
+                this.dialogVisible = true;
+                this.imageUrl = path
+            },
+            statusChangePass(row) {
+                if (row.status == 1) {
+                    this.$message.success('已通过');
+                } else {
+                    axios.post('http://localhost:8080/admin/change', {
+                        status: 1,
+                        id: row.id
+                    }) // 替换为你的API地址  
+                        .then(response => {
+                            if (response.data.code == 200) {
+                                this.$message.success('通过成功');
+                            } else {
+                                this.$message.error('通过失败，请重试！');
+                            }
+                        })
+                        .catch(error => {
+                            this.$message.success('系统异常，请重试！');
+                        });
+                    this.refresh();
+                }
+            },
+            statusChangeBack(row) {
+                if (row.status == 2) {
+                    this.$message.error('已退回');
+                } else {
+                    axios.post('http://localhost:8080/admin/change', {
+                        status: 2,
+                        id: row.id
+                    }) // 替换为你的API地址  
+                        .then(response => {
+                            if (response.data.code == 200) {
+                                this.$message.success('退回成功');
+                            } else {
+                                this.$message.error('退回失败，请重试！');
+                            }
+                        })
+                        .catch(error => {
+                            this.$message.success('系统异常，请重试！');
+                        });
+                }
+                this.refresh();
+            },
+
+        }
+    })
+</script>
+
+</html>

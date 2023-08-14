@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My First Cesium App</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.eot?mg2ibl');
+            src: url('fonts/icomoon.eot?mg2ibl#iefix') format('embedded-opentype'),
+                url('fonts/icomoon.ttf?mg2ibl') format('truetype'),
+                url('fonts/icomoon.woff?mg2ibl') format('woff'),
+                url('fonts/icomoon.svg?mg2ibl#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        span {
+            font-family: 'icomoon';
+        }
+    </style>
+</head>
+
+<body>
+    <div id="total">
+        <div class="top">
+            <div class="topUser">
+                <div class="topUserOne">
+                    <span>当前用户</span>
+                    <span>管理员</span>
+                    <span>|</span>
+                </div>
+                <div class="topUserTwo">
+                    <a href="#">修改密码</a>
+                    <a href="#">注销登录</a>
+                </div>
+            </div>
+            <div class="topName">
+                <span>大尺度耕地遥感精准识别系统</span>
+            </div>
+            <div class="check">
+                <div class="input">
+                    <input type="text" class="checkinput">
+                    <button>查询</button>
+                </div>
+            </div>
+        </div>
+        <div id="cesiumContainer">
+            <div class="leftmenu">
+                <div class="leftTop">
+                    <div class="leftTopF">
+                        <span class="pointTO"></span>
+                        <input type="checkbox">跟踪定位
+                    </div>
+                    <div class="leftTopT">
+                        <ul>
+                            <li>&nbsp农田块</li>
+                            <li>&nbsp街道图</li>
+                            <li>&nbsp影像图</li>
+                            <li>&nbsp&nbsp&nbsp影响标记</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="leftMiddle">
+                    <div class="tudeyongtu">
+                        <span style="font-size: 8px;">土地用途</span>
+                    </div>
+                    <div class="data">
+                        <template>
+                            <el-table :data="tableData"  style="font-size: 7px;" :row-style="{height:'0px'}"
+                                :cell-style="{padding:'0px'}" :default-sort="{prop: 'date', order: 'descending'}"
+                                show-header="false">
+                                <el-table-column prop="date" label="田块用途" width="81" >
+                                </el-table-column>
+                                <el-table-column prop="name" label="田块数/块" width="79">
+                                </el-table-column>
+                                <el-table-column prop="address" label="面积/亩">
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    </div>
+                    <div class="leftMiddlebottom">
+                      <div class="datatotal">
+                        <span>合计&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i>we231</i>&nbsp&nbsp&nbsp<i>we231</i></span>
+                        <span>总耕地面积&nbsp&nbsp&nbsp&nbsp<i>we231</i></span>
+                        <span>承包地面积&nbsp&nbsp&nbsp<i>we231</i></span>
+                        <span>园区面积&nbsp&nbsp&nbsp&nbsp<i>we231</i></span>
+                      </div>
+                      <input type="button" value="保存" class="baocun">
+                    </div>
+                </div>
+            </div>
+            <div class="rightmenu">
+            </div>
+        </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#total",
+            data() {
+                return {
+                    tableData: [{
+                        date: '梯田',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '菜田',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '水产',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '林地',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '果园',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '其他',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '未规定用途',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '经作',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '花卉',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '休闲农业',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '科学研究与推广',
+                        name: '12312',
+                        address: '12312'
+                    }, {
+                        date: '设施用地',
+                        name: '12312',
+                        address: '12312'
+                   } ]
+                }
+            }
+        }) 
+    </script>
+    <script>
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODE2ZDkyMy1lMDljLTQ5YTItODJkZi1iZDRiYmFjZTliNmYiLCJpZCI6MTI2MjY3LCJpYXQiOjE2NzczMjMxNTZ9.49ukLIId_Ycg75tZIYjrG8SLVIWbQt2p8-dtihmcLW0';
+        const viewer = new Cesium.Viewer('cesiumContainer', {
+            geocoder: false, //右上角 搜索
+            homeButton: false, //右上角 Home
+            sceneModePicker: false, //右上角 2D/3D切换
+            baseLayerPicker: false,  //右上角 地形
+            navigationHelpButton: false, //右上角 Help
+            animation: false, // 左下角 圆盘动画控件
+            timeline: false, //时间轴
+            fullscreenButton: false, //右下角 全屏控件
+            vrButton: false, // 如果设置为true，将创建VRButton小部件。
+            scene3DOnly: true, // 每个几何实例仅以3D渲染以节省GPU内存
+            infoBox: false, //隐藏点击要素后的提示信息
+        });
+        viewer._cesiumWidget._creditContainer.style.display = "none";
+    </script>
+
+</body>
+
+</html>
